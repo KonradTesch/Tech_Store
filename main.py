@@ -3,29 +3,35 @@ from store import Store
 
 TITLE = "BEST BUY MENU"
 
+
 def setup_store() -> Store:
+    """
+    Set up the initial store with default inventory.
+    :return: Store object with initial product inventory
+    """
     # setup initial stock of inventory
     product_list = [Product("MacBook Air M2", price=1450, quantity=100),
                     Product("Bose QuietComfort Earbuds", price=250, quantity=500),
                     Product("Google Pixel 7", price=500, quantity=250)
                     ]
     best_buy = Store(product_list)
-
     return best_buy
 
 
 def print_title():
+    """
+    Print the formatted title for the menu.
+    """
     print()
     print(f"\t{TITLE.upper()}")
     print(f"\t{"_" * len(TITLE)}")
 
 
-def start(store:Store):
-    '''
-    
-    :param store: 
-    :return: 
-    '''''
+def start(store: Store):
+    """
+    Display the main menu and handle user input.
+    :param store: Store object to operate on
+    """
     print_title()
 
     for index, (function, label) in MENU_OPTIONS.items():
@@ -45,6 +51,10 @@ def start(store:Store):
 
 
 def list_products(store: Store):
+    """
+    Display all active products in the store.
+    :param store: Store object to list products from
+    """
     product_list = store.get_all_products()
 
     seperator_line()
@@ -56,12 +66,19 @@ def list_products(store: Store):
 
 
 def show_total_amount(store: Store):
+    """
+    Display the total quantity of all items in the store.
+    :param store: Store object to calculate total from
+    """
     total = store.get_total_quantity()
-
     print(f"\nTotal of {total} items in store.")
 
 
 def make_order(store: Store):
+    """
+    Handle the order process with user input validation.
+    :param store: Store object to process order from
+    """
     list_products(store)
     products = store.get_all_products()
 
@@ -78,7 +95,7 @@ def make_order(store: Store):
 
         while True:
             quantity_input = input(f"What amount do you want to order? ")
-            if not quantity_input.isnumeric() or int(product_input) < 0:
+            if not quantity_input.isnumeric() or int(quantity_input) < 0:
                 print("Invalid input. Try again.")
                 continue
             break
@@ -101,10 +118,17 @@ def make_order(store: Store):
 
 
 def quit_program(store: Store):
+    """
+    Exit the program.
+    :param store: Store object (not used but required for consistency)
+    """
     quit()
 
 
 def seperator_line():
+    """
+    Print a separator line for formatting.
+    """
     print("-" * 15)
 
 
@@ -117,11 +141,14 @@ MENU_OPTIONS = {
 
 
 def main():
+    """
+    Main function to run the store application.
+    """
     store = setup_store()
 
     while True:
         start(store)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
