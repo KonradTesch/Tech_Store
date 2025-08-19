@@ -47,7 +47,7 @@ class Product:
             raise ValueError(f"{self.name}: Quantity is greater than what in store")
 
         self.set_quantity(self.quantity - quantity)
-        return  quantity * self.price
+        return quantity * self.price
 
 
 def main():

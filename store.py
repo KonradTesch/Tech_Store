@@ -4,6 +4,7 @@ class Store:
     def __init__(self, product_list: list):
         self.product_list = product_list
 
+
     def add_product(self, product):
         self.product_list.append(product)
 
@@ -27,9 +28,9 @@ class Store:
         return active_products
 
 
-    def order(self, shopping_card: list[tuple]):
+    def order(self, shopping_cart: list[tuple]):
         total_price = 0
-        for product, quantity in shopping_card:
+        for product, quantity in shopping_cart:
             if product not in self.product_list:
                 raise ValueError(f'Product {product.name} not in store')
 
@@ -37,6 +38,7 @@ class Store:
             total_price += self.product_list[index].buy(quantity)
 
         return total_price
+
 
 def main():
     product_list = [Product("MacBook Air M2", price=1450, quantity=100),

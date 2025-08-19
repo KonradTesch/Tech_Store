@@ -2,6 +2,7 @@ from product import Product
 from store import Store
 
 TITLE = "BEST BUY MENU"
+
 def setup_store() -> Store:
     # setup initial stock of inventory
     product_list = [Product("MacBook Air M2", price=1450, quantity=100),
@@ -20,6 +21,11 @@ def print_title():
 
 
 def start(store:Store):
+    '''
+    
+    :param store: 
+    :return: 
+    '''''
     print_title()
 
     for index, (function, label) in MENU_OPTIONS.items():
@@ -59,7 +65,7 @@ def make_order(store: Store):
     list_products(store)
     products = store.get_all_products()
 
-    shopping_card = []
+    shopping_cart = []
 
     while True:
 
@@ -72,7 +78,7 @@ def make_order(store: Store):
 
         while True:
             quantity_input = input(f"What amount do you want to order? ")
-            if not quantity_input.isnumeric() and int(product_input) < 0:
+            if not quantity_input.isnumeric() or int(product_input) < 0:
                 print("Invalid input. Try again.")
                 continue
             break
@@ -80,16 +86,18 @@ def make_order(store: Store):
         product_choice = products[int(product_input) - 1]
         quantity = int(quantity_input)
 
-        shopping_card.append((product_choice, quantity))
+        shopping_cart.append((product_choice, quantity))
 
         if input("Would you like to add another item? (Y/N) ").lower() != "y":
             break
         print()
 
     seperator_line()
-    total_price = store.order(shopping_card)
-    print(f"Order made. Your total price is ${total_price:.2f}.")
-
+    try:
+        total_price = store.order(shopping_cart)
+        print(f"Order made. Your total price is ${total_price:.2f}.")
+    except ValueError as e:
+        print(f"Error with order: {e}")
 
 
 def quit_program(store: Store):
@@ -106,6 +114,7 @@ MENU_OPTIONS = {
     3: (make_order, "Make an order"),
     4: (quit_program, "Quit")
     }
+
 
 def main():
     store = setup_store()
