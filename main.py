@@ -34,23 +34,70 @@ def start(store:Store):
             continue
         function = MENU_OPTIONS[int(menu_input)][0]
         function(store)
+        input("Press ENTER to continue...")
         break
 
 
 def list_products(store: Store):
-    pass
+    product_list = store.get_all_products()
+
+    seperator_line()
+
+    for i, product in enumerate(product_list, 1):
+        print(f"{i}. {product.show()}")
+
+    seperator_line()
 
 
 def show_total_amount(store: Store):
-    pass
+    total = store.get_total_quantity()
+
+    print(f"\nTotal of {total} items in store.")
 
 
 def make_order(store: Store):
-    pass
+    list_products(store)
+    products = store.get_all_products()
+
+    shopping_card = []
+
+    while True:
+
+        while True:
+            product_input = input(f"Which product do you want to order? (1 - {len(products)}) ")
+            if not product_input.isnumeric() or 0 > int(product_input) or int(product_input) > len(products):
+                print("Invalid input. Try again.")
+                continue
+            break
+
+        while True:
+            quantity_input = input(f"What amount do you want to order? ")
+            if not quantity_input.isnumeric() and int(product_input) < 0:
+                print("Invalid input. Try again.")
+                continue
+            break
+
+        product_choice = products[int(product_input) - 1]
+        quantity = int(quantity_input)
+
+        shopping_card.append((product_choice, quantity))
+
+        if input("Would you like to add another item? (Y/N) ").lower() != "y":
+            break
+        print()
+
+    seperator_line()
+    total_price = store.order(shopping_card)
+    print(f"Order made. Your total price is ${total_price:.2f}.")
+
 
 
 def quit_program(store: Store):
     quit()
+
+
+def seperator_line():
+    print("-" * 15)
 
 
 MENU_OPTIONS = {
