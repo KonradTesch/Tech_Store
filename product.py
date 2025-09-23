@@ -10,12 +10,14 @@ class Product:
         :param price: Price of the product
         :param quantity: Available quantity in stock
         """
-        if not isinstance(name, str) and name != "":
-            raise TypeError("Name must be a non-empty string")
+        if not isinstance(name, str):
+            raise TypeError("Name must be string")
+        elif name == "":
+            raise ValueError("Name cannot be an empty string")
 
         if not isinstance(price, (float, int)):
             raise TypeError("Price must be a number")
-        if price < 0:
+        elif price < 0:
             raise ValueError("Price cannot be negative")
 
         self.name = name
